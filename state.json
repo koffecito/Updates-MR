@@ -1,5 +1,12 @@
 {
   "app_version": "",
-  "update_offset": 0,
-  "chats": null
+  "update_offset": 928345901,
+  "photo_file_id": "AgACAgIAAyEGAAMBAQvU4wADY2qnCzX4vy8uxEGh-N8_KyeDdKqtAAK7HmsbIU45Sf_GSs5-nrDCAQADAgADeQADPQQ",
+  "chats": [
+    {
+      "chat_id": -1004312519907,
+      "thread_id": 98,
+      "title": "Forum MRC"
+    }
+  ]
 }
