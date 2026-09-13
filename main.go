@@ -123,8 +123,8 @@ func runCheck(botToken, appID, photoPath string, state *State) {
 	}
 
 	caption := fmt.Sprintf(
-	"📦 Новое обновление!\n\nПриложение: %s\nВерсия: %s\n\nЧто нового:\n%s",
-	appName, version, whatsNew,
+    "📦 Новое обновление!\n\n<b>Приложение:</b> %s\n<b>Версия:</b> %s\n\n<b>Что нового:</b>\n<blockquote>%s</blockquote>",
+    appName, version, whatsNew,
 )
 	buttonURL := "https://play.google.com/store/apps/details?id=" + url.QueryEscape(appID)
 
