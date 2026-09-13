@@ -3,10 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html"
 	"io"
 	"net/http"
 	"net/url"
 	"regexp"
+	"strings"
 )
 
 func fetchPlayStoreInfo(appID string) (version string, whatsNew string, err error) {
@@ -50,10 +52,18 @@ func fetchPlayStoreInfo(appID string) (version string, whatsNew string, err erro
 		return "", "", fmt.Errorf("не удалось извлечь версию по ожидаемым индексам (структура ds:5 могла измениться): %w", vErr)
 	}
 	if wErr != nil {
-		whats = "(текст «что нового» не найден или отсутствует у этого приложения)"
-	}
+	whats = "(текст «что нового» не найден или отсутствует у этого приложения)"
+} else {
+	whats = strings.ReplaceAll(whats, "<br>", "\n")
+	whats = strings.ReplaceAll(whats, "<br/>", "\n")
+	whats = strings.ReplaceAll(whats, "<br />", "\n")
 
-	return version, whats, nil
+	tagRe := regexp.MustCompile(`<[^>]*>`)
+	whats = tagRe.ReplaceAllString(whats, "")
+	whats = html.EscapeString(whats)
+}
+
+return version, whats, nil
 }
 
 func digString(v interface{}, path ...int) (string, error) {
