@@ -91,7 +91,7 @@ func runPoll(botToken, appID string, ownerID int64, photoPath string, state *Sta
 
 			state.addChat(ConnectedChat{ChatID: cm.Chat.ID, ThreadID: threadID, Title: cm.Chat.Title})
 
-			version, _, vErr := fetchPlayStoreInfo(appID)
+			version, _, _, vErr := fetchPlayStoreInfo(appID)
 			versionText := version
 			if vErr != nil {
 				versionText = "не удалось получить (" + vErr.Error() + ")"
@@ -112,7 +112,7 @@ func runPoll(botToken, appID string, ownerID int64, photoPath string, state *Sta
 }
 
 func runCheck(botToken, appID, photoPath string, state *State) {
-	version, whatsNew, err := fetchPlayStoreInfo(appID)
+	version, appName, whatsNew, err := fetchPlayStoreInfo(appID)
 	if err != nil {
 		log.Fatalf("ошибка получения данных из Google Play: %v", err)
 	}
@@ -123,9 +123,9 @@ func runCheck(botToken, appID, photoPath string, state *State) {
 	}
 
 	caption := fmt.Sprintf(
-		"📦 Новое обновление!\n\nПриложение: %s\nВерсия: %s\n\nЧто нового:\n%s",
-		appID, version, whatsNew,
-	)
+	"📦 Новое обновление!\n\nПриложение: %s\nВерсия: %s\n\nЧто нового:\n%s",
+	appName, version, whatsNew,
+)
 	buttonURL := "https://play.google.com/store/apps/details?id=" + url.QueryEscape(appID)
 
 	for _, c := range state.Chats {
