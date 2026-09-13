@@ -45,10 +45,18 @@ func fetchPlayStoreInfo(appID string) (version string, appName string, whatsNew 
 		titleMatch := titleRe.FindStringSubmatch(pageHTML)
 
 		if len(titleMatch) > 1 {
-			appName = html.UnescapeString(titleMatch[1])
-			appName = strings.TrimSuffix(appName, " - Apps on Google Play")
-			appName = strings.TrimSuffix(appName, " – Apps on Google Play")
-		}
+    appName = html.UnescapeString(titleMatch[1])
+
+    if strings.Contains(appName, " – ") {
+        parts := strings.SplitN(appName, " – ", 2)
+        appName = parts[1]
+    } else if strings.Contains(appName, " - ") {
+        parts := strings.SplitN(appName, " - ", 2)
+        appName = parts[1]
+    }
+
+    appName = strings.TrimSpace(appName)
+}
 	}
 
 	re := regexp.MustCompile(`AF_initDataCallback\({key: 'ds:5'.*?data:(\[.*?\]), sideChannel`)
