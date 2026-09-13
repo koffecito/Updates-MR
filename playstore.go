@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"html"
 	"io"
 	"net/http"
 	"net/url"
@@ -57,10 +56,9 @@ func fetchPlayStoreInfo(appID string) (version string, whatsNew string, err erro
 	whats = strings.ReplaceAll(whats, "<br>", "\n")
 	whats = strings.ReplaceAll(whats, "<br/>", "\n")
 	whats = strings.ReplaceAll(whats, "<br />", "\n")
-
+		
 	tagRe := regexp.MustCompile(`<[^>]*>`)
 	whats = tagRe.ReplaceAllString(whats, "")
-	whats = html.EscapeString(whats)
 }
 
 return version, whats, nil
