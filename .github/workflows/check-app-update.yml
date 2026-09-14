@@ -2,7 +2,8 @@ name: Check Google Play update
 
 on:
   schedule:
-    - cron: '0 9 * * *'
+  - cron: '0 9 * * *'
+  - cron: '0 21 * * *'
   workflow_dispatch: {}
 
 permissions:
